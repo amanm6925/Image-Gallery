@@ -31,6 +31,8 @@ Partial Class Form1
         Me.ImagePictureBox = New System.Windows.Forms.PictureBox()
         Me.DirectoryLabel = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.BrowserButton = New System.Windows.Forms.Button()
         Me.StyleGroupBox.SuspendLayout()
         CType(Me.ImagePictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -40,7 +42,7 @@ Partial Class Form1
         '
         Me.DirectoryTextBox.Location = New System.Drawing.Point(38, 41)
         Me.DirectoryTextBox.Name = "DirectoryTextBox"
-        Me.DirectoryTextBox.Size = New System.Drawing.Size(606, 22)
+        Me.DirectoryTextBox.Size = New System.Drawing.Size(554, 22)
         Me.DirectoryTextBox.TabIndex = 1
         '
         'GetImage
@@ -124,11 +126,21 @@ Partial Class Form1
         Me.Panel1.Size = New System.Drawing.Size(786, 412)
         Me.Panel1.TabIndex = 11
         '
+        'BrowserButton
+        '
+        Me.BrowserButton.Location = New System.Drawing.Point(598, 40)
+        Me.BrowserButton.Name = "BrowserButton"
+        Me.BrowserButton.Size = New System.Drawing.Size(40, 23)
+        Me.BrowserButton.TabIndex = 12
+        Me.BrowserButton.Text = "..."
+        Me.BrowserButton.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1045, 542)
+        Me.Controls.Add(Me.BrowserButton)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.DirectoryLabel)
         Me.Controls.Add(Me.ImageListBox)
@@ -154,5 +166,7 @@ Partial Class Form1
     Friend WithEvents ImagePictureBox As System.Windows.Forms.PictureBox
     Friend WithEvents DirectoryLabel As System.Windows.Forms.Label
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
+    Friend WithEvents BrowserButton As System.Windows.Forms.Button
 
 End Class

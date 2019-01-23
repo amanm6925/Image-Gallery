@@ -119,4 +119,9 @@ Again:  For Each ctrl In ImagePictureBox.Controls
 
     End Sub
 
+    Private Sub BrowserButton_Click(sender As Object, e As EventArgs) Handles BrowserButton.Click
+        If (FolderBrowserDialog1.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+            DirectoryTextBox.Text = FolderBrowserDialog1.SelectedPath
+        End If
+    End Sub
 End Class
