@@ -4,7 +4,7 @@
 
 Public Class Form1
     Dim directoryName As String
-    Dim countfiles As Integer = 0
+
     Dim files() As String
     Dim TempPic As New PictureBox
     Dim page As Integer = 0
@@ -62,26 +62,19 @@ Public Class Form1
     Private Sub populate_thumbnails()
         ImagePictureBox.Visible = True
         ImagePictureBox.Image = Nothing
-        Previous.Visible = True
         NextButton.Visible = True
         RemoveThumbnails()
         rowImage = 1
         colImage = 1
-        Dim extension As String
 
         Dim countpics As Integer = 0
         While (countpics < 9)
-            If ((countfiles) >= files.Length) Then
-                MessageBox.Show("This is the end Of Pages", "Last Page")
+            If (page * 9 + countpics >= files.Length) Then
+                NextButton.Visible = False
                 Return
             End If
-            extension = Path.GetExtension(files(countfiles))
-            If (extension = ".jpg" Or extension = ".jpeg" Or extension = ".png" Or extension = ".gif") Then
-                'MessageBox.Show(file)
-                addImage(files(countfiles))
-                countpics += 1
-            End If
-            countfiles += 1
+            addImage(files(page * 9 + countpics))
+            countpics += 1
         End While
 
     End Sub
@@ -102,6 +95,8 @@ Public Class Form1
         newPic.Image = Image.FromFile(file)
         newPic.SizeMode = PictureBoxSizeMode.Zoom
         ImagePictureBox.Controls.Add(newPic)
+        AddHandler newPic.Click, AddressOf Me.newPic_Click
+
         colImage = colImage + 1
         If (colImage = 4) Then
             colImage = 1
@@ -129,7 +124,7 @@ Again:  For Each ctrl In ImagePictureBox.Controls
         ImagePictureBox.BorderStyle = BorderStyle.FixedSingle
         Previous.Visible = False
         NextButton.Visible = False
-        countfiles = 0
+        page = 0
 
 
         BackButton.Visible = False
@@ -163,20 +158,7 @@ Again:  For Each ctrl In ImagePictureBox.Controls
     End Sub
 
 
-    Private Sub ImagePictureBox_MouseClick(sender As Object, e As MouseEventArgs) Handles ImagePictureBox.MouseClick
-        Dim x As Integer = e.X
-        Dim y As Integer = e.Y
-        Dim a As Integer = x / (ImagePictureBox.Width / 3)
-        Dim b As Integer = y / (((ImagePictureBox.Width / 3) * 9) / 16)
-        TempPic.Location = ImagePictureBox.Location
-        TempPic.Size = ImagePictureBox.Size
-        TempPic.BorderStyle = BorderStyle.FixedSingle
-        TempPic.Image = Image.FromFile(files(3 * b + a))
-        TempPic.SizeMode = PictureBoxSizeMode.Zoom
-        RemoveThumbnails()
-        ImagePictureBox.Controls.Add(TempPic)
-        BackButton.Visible = True
-    End Sub
+
 
     Private Sub BackButton_Click(sender As Object, e As EventArgs) Handles BackButton.Click
         RemoveThumbnails()
@@ -187,6 +169,7 @@ Again:  For Each ctrl In ImagePictureBox.Controls
     Private Sub NextButton_Click(sender As Object, e As EventArgs) Handles NextButton.Click
         page += 1
         populate_thumbnails()
+        Previous.Visible = True
     End Sub
 
     Private Sub Previous_Click(sender As Object, e As EventArgs) Handles Previous.Click
@@ -194,8 +177,16 @@ Again:  For Each ctrl In ImagePictureBox.Controls
             MessageBox.Show("There is no preious page", "Error")
             Return
         End If
-
+        page -= 1
         populate_thumbnails()
+        If (page = 0) Then
+            Previous.Visible = False
+        End If
+    End Sub
+    Private Sub newPic_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        RemoveThumbnails()
+        ImagePictureBox.Image = sender.Image
+        BackButton.Visible = True
     End Sub
 End Class
 
